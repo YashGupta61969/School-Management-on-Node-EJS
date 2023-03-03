@@ -12,7 +12,8 @@ exports.getAllClass = (req,res)=>{
         const areMorePages = pager.currentPage === pager.totalPages;
         const pageOfItems = data.slice(pager.startIndex, pager.endIndex + 1);
         
-        res.send({data:pageOfItems,areMorePages:!areMorePages,status:'success'})
+        res.render('pages/classes', { data: pageOfItems, areMorePages })
+        // res.send({data:pageOfItems,areMorePages:!areMorePages,status:'success'})
     }).catch(err=>res.status(500).send({error:err}))
 }
 

@@ -10,7 +10,9 @@ exports.getAllTeacher = (req, res) => {
         const pager = paginate(data.length, page);
         const areMorePages = pager.currentPage === pager.totalPages;
         const pageOfItems = data.slice(pager.startIndex, pager.endIndex + 1);
-        res.send({ data: pageOfItems, areMorePages:!areMorePages, status: 'success' })
+
+        res.render('pages/teachers', { data: pageOfItems, areMorePages })
+        // res.send({ data: pageOfItems, areMorePages:!areMorePages, status: 'success' })
     }).catch(err => res.status(500).send({ error: err, status: 'error' }))
 }
 

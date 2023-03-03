@@ -2,17 +2,21 @@ const db = require('../../models')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
-exports.login = (req,res)=>{
+exports.loginPage = (req, res) => {
+    res.render('pages/login')
+}
+
+exports.login = (req, res) => {
     // find a single user in the db if esists
-    db.Admin.findOne({where: { email: req.body.email } }).then(user => {  
+    db.Admin.findOne({ where: { email: req.body.email } }).then(user => {
         if (!user) {
-            return res.status(404).send({status:'error', message: 'Email Not Found' })
+            return res.status(404).send({ status: 'error', message: 'Email Not Found' })
         } else {
             // compares the password provided with the hash
             bcrypt.compare(req.body.password, user.password, (err, result) => {
                 if (err) {
-                        res.status(401).json({
-                        status:'error',
+                    res.status(401).json({
+                        status: 'error',
                         message: "Auth failed",
                         error: err
                     });
@@ -29,14 +33,9 @@ exports.login = (req,res)=>{
                             expiresIn: "5h"
                         }
                     );
-                        res.status(200).send({
-                        message: 'Auth Successful',
-                        token: token,
-                        id: user.id,
-                        email: user.email
-                    })
+                    res.render('pages/schools')
                 } else {
-                    res.status(401).send({status:'error', message: 'Passwords Do Not Match' })
+                    res.status(401).send({ status: 'error', message: 'Passwords Do Not Match' })
                 }
             })
         }

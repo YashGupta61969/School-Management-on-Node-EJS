@@ -70,7 +70,7 @@ db.Teachers.belongsTo(db.Schools)
 db.Classes.hasOne(db.Teachers)
 db.Teachers.belongsTo(db.Classes)
 
-db.sequelize.sync({force:true, alter:true}).then(() => {
+db.sequelize.sync({force:false, alter:false}).then(() => {
   console.log('Synced')
 })
 .catch(err => {
